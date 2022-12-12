@@ -14,9 +14,9 @@ import { Vendor } from '../vendor'
 import { Currency_NetSuite_Extract } from '../currency-netsuite-extract'
 import {Subsidiary_NetSuite_Extract} from '../subsidiary-netsuite-extract'
 
-import * as due_date_to_yyyy_mm_dd from './hooks/due-date-to-yyyy-mm-dd.js'
-import * as transaction_date_to_yyyy_mm_dd from './hooks/transaction-date-to-yyyy-mm-dd.js'
-import * as set_transaction_amount_base_currency_amount from './hooks/set-transaction-amount-base-currency-amount.js'
+import due_date_to_yyyy_mm_dd from './hooks/due-date-to-yyyy-mm-dd.js'
+import transaction_date_to_yyyy_mm_dd from './hooks/transaction-date-to-yyyy-mm-dd.js'
+import set_transaction_amount_base_currency_amount from './hooks/set-transaction-amount-base-currency-amount.js'
 
 export const Open_AP_Template = new Sheet(
   'Open AP Template',
