@@ -14,9 +14,9 @@ import { Subsidiary_NetSuite_Extract } from '../subsidiary-netsuite-extract'
 import { Currency_NetSuite_Extract } from '../currency-netsuite-extract'
 import { Customers } from '../customers'
 
-import * as set_transaction_amount_base_currency_amount from './hooks/set-transaction-amount-base-currency-amount.js'
-import * as transaction_date_to_yyyy_mm_dd from './hooks/transaction-date-to-yyyy-mm-dd.js'
-import * as due_date_to_yyyy_mm_dd from './hooks/due-date-to-yyyy-mm-dd.js'
+import set_transaction_amount_base_currency_amount from './hooks/set-transaction-amount-base-currency-amount.js'
+import transaction_date_to_yyyy_mm_dd from './hooks/transaction-date-to-yyyy-mm-dd.js'
+import due_date_to_yyyy_mm_dd from './hooks/due-date-to-yyyy-mm-dd.js'
 
 export const Open_AR_Template = new Sheet(
   'Open AR Template',

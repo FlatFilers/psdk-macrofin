@@ -20,7 +20,7 @@ import { Chart_of_Accounts_NetSuite_Extract } from '../chart-of-accounts-netsuit
 import { Price_Level_NetSuite_Extract } from '../price-level-netsuite-extract'
 import { Tax_Item_NetSuite_Extract } from '../tax-item-netsuite-extract'
 
-import * as default_address_addressee_to_company_name from './hooks/default-address1_addressee-to-company-name.js'
+import default_address_addressee_to_company_name from './hooks/default-address1_addressee-to-company-name.js'
 
 export const Vendor = new Sheet(
   'Vendor',
