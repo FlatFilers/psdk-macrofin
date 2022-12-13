@@ -63,12 +63,22 @@ export const Open_AP_Template = new Sheet(
       label: 'Exchange Rate',
       description:
         'Enter the currency exchange rate as of cutover date for the transaction.  Ask your lead consultant for details.',
+        default: 1,
+        annotations: {
+          default: true,
+          defaultMessage: 'Exchange Rate was not provided, it has been set to '
+        },
     }),
 
     postingPeriod: TextField({
       label: 'Posting Period',
       description:
         'This is the cutover period.  Formula driven. Do not override.',
+      default: 'Aug 2021',
+      annotations: {
+        default: true,
+        defaultMessage: 'Posting Period was automatically set.'
+      },
     }),
 
     tranDate: SmartDateField({
