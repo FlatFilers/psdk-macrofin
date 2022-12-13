@@ -14,9 +14,10 @@ import { Vendor } from '../vendor'
 import { Currency_NetSuite_Extract } from '../currency-netsuite-extract'
 import {Subsidiary_NetSuite_Extract} from '../subsidiary-netsuite-extract'
 
-import due_date_to_yyyy_mm_dd from './hooks/due-date-to-yyyy-mm-dd.js'
-import transaction_date_to_yyyy_mm_dd from './hooks/transaction-date-to-yyyy-mm-dd.js'
+//import due_date_to_yyyy_mm_dd from './hooks/due-date-to-yyyy-mm-dd.js'
+//import transaction_date_to_yyyy_mm_dd from './hooks/transaction-date-to-yyyy-mm-dd.js'
 import set_transaction_amount_base_currency_amount from './hooks/set-transaction-amount-base-currency-amount.js'
+import { SmartDateField } from '../../src/SmartDateField'
 
 export const Open_AP_Template = new Sheet(
   'Open AP Template',
@@ -70,15 +71,17 @@ export const Open_AP_Template = new Sheet(
         'This is the cutover period.  Formula driven. Do not override.',
     }),
 
-    tranDate: TextField({
+    tranDate: SmartDateField({
       label: 'Tran Date',
       description: 'Enter the original invoice date.',
       required: true,
+      fString: 'yyyy-MM-dd',
     }),
 
-    dueDate: TextField({
+    dueDate: SmartDateField({
       label: 'Due Date',
       description: 'Enter the due date of the invoice.',
+      fString: 'yyyy-MM-dd',
     }),
 
     referenceno: TextField({
@@ -162,8 +165,8 @@ export const Open_AP_Template = new Sheet(
     batchRecordsCompute: async (recordBatch, session, logger) => {
       /** begin running migrated hooks **/
 
-      await due_date_to_yyyy_mm_dd({ recordBatch, session, logger })
-      await transaction_date_to_yyyy_mm_dd({ recordBatch, session, logger })
+      //await due_date_to_yyyy_mm_dd({ recordBatch, session, logger })
+      //await transaction_date_to_yyyy_mm_dd({ recordBatch, session, logger })
       await set_transaction_amount_base_currency_amount({
         recordBatch,
         session,
