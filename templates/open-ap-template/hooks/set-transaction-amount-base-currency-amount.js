@@ -2,6 +2,8 @@
 module.exports = async ({ recordBatch, session, logger }) => {
   await Promise.all(
     await recordBatch.records.map(async (record) => {
+      /* Replaced by Compute Function
+
       //Check and Round Exchange Rate
       if (!isNaN(record.get('exchangeRate'))) {
         record.set(
@@ -13,7 +15,7 @@ module.exports = async ({ recordBatch, session, logger }) => {
           'Exchange Rate has been rounded to 8 decimal places'
         )
       }
-
+*/
       //Calculate Transaction Amount
       if (record.get('itemLine_Quantity') && record.get('itemLine_Rate')) {
         record.set(
@@ -40,6 +42,7 @@ module.exports = async ({ recordBatch, session, logger }) => {
           'Base Currency Amount has been calculated'
         )
       }
+
       //Check and Round Transaction Amount
       if (record.get('Transaction_Amount')) {
         record.set(
@@ -51,6 +54,7 @@ module.exports = async ({ recordBatch, session, logger }) => {
           'Exchange Rate has rounded set to 2 decimal places'
         )
       }
+
       //Check and Round Base Currency Amount
       if (record.get('Base_Currency_Amount')) {
         record.set(

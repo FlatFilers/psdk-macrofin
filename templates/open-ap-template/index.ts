@@ -66,8 +66,11 @@ export const Open_AP_Template = new Sheet(
         default: 1,
         annotations: {
           default: true,
-          defaultMessage: 'Exchange Rate was not provided, it has been set to '
+          defaultMessage: 'Exchange Rate was not provided, it has been set to ',
+          compute: true,
+          computeMessage: 'This value was automatically reformatted to eight decimal places. Original value was: ',
         },
+        compute: (v: number) => {return Number(v.toFixed(8))},
     }),
 
     postingPeriod: TextField({
@@ -145,12 +148,22 @@ export const Open_AP_Template = new Sheet(
       label: 'Transaction Amount',
       description:
         'This is the column is calculated by multiplying the rate to the quantity.  Formula driven do not override.',
+        annotations: {
+          compute: true,
+          computeMessage: 'This value was automatically reformatted to two decimal places. Original value was: ',
+        },
+        //compute: (v: number) => {return Number(v.toFixed(2))},
     }),
 
     Base_Currency_Amount: NumberField({
       label: 'Base Currency Amount',
       description:
         'This is the column is calculated by multiplying the Transaction Amount to the Exchange Rate to calculate the amount that is going to be posted to the general ledger.  Formula driven. Do not override.',
+        annotations: {
+          compute: true,
+          computeMessage: 'This value was automatically reformatted to two decimal places. Original value was: ',
+        },
+        //compute: (v: number) => {return Number(v.toFixed(2))},
     }),
 
     itemLine_department: TextField({
