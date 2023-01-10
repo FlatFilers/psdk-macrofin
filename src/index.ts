@@ -31,6 +31,7 @@ import { Billing_Schedule } from '../templates/billing_schedule'
 import { Job } from '../templates/job'
 import { Partners } from '../templates/partners'
 import { Open_Amortization_Schedule } from '../templates/open_amortization_schedule'
+import { Open_Sales_Order } from '../templates/open_sales_order'
 
 export default new Workbook({
   name: 'Default',
@@ -67,5 +68,6 @@ export default new Workbook({
     Job,
     Partners,
     Open_Amortization_Schedule,
+    Open_Sales_Order,
   },
 })
