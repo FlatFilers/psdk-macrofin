@@ -32,7 +32,9 @@ import { Payment_File_Format_NetSuite_Extract } from '../templates/payment-file-
 //import { Invoices_BASELINE } from './invoices-baseline'
 //import { Customers_BASELINE_Autogenerate_Customer_ID } from './customers-baseline-autogenerate-customer-id'
 //import { Bills_BASELINE } from './bills-baseline'
-//import { Employees_BASELINE } from './employees-baseline'
+import { Employees } from '../templates/employees'
+import { Sales_Order_Status } from '../templates/sales-order-status'
+import { Location } from '../templates/location'
 
 export default new Workbook({
   name: 'Default',
@@ -70,6 +72,8 @@ export default new Workbook({
     //Invoices_BASELINE,
     //Customers_BASELINE_Autogenerate_Customer_ID,
     //Bills_BASELINE,
-    //Employees_BASELINE,
+    Employees,
+    Sales_Order_Status,
+    Location,
   },
 })
