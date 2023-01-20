@@ -28,6 +28,8 @@ export const Customer_Vendor_NetSuite_Extract = new Sheet(
       unique: true,
     }),
 
+    //May need reference here
+
     currency: TextField({
       label: 'Currency',
     }),

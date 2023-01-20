@@ -8,17 +8,8 @@ import {
   TextField,
   Workbook,
   Message,
+  ReferenceField,
 } from '@flatfile/configure'
-
-import { Status_NetSuite_Extract } from '../status-netsuite-extract'
-import { Subsidiary_NetSuite_Extract } from '../subsidiary-netsuite-extract'
-import { Sales_Rep_NetSuite_Extract } from '../sales-rep-netsuite-extract'
-import { Customer_Category_NetSuite_Extract } from '../customer-category-netsuite-extract'
-import { States_NetSuite_Extract } from '../states-netsuite-extract'
-import { Countries_NetSuite_Extract } from '../countries-netsuite-extract'
-import { Chart_of_Accounts_NetSuite_Extract } from '../chart-of-accounts-netsuite-extract'
-import { Currency_NetSuite_Extract } from '../currency-netsuite-extract'
-import { Payment_Term_NetSuite_Extract } from '../payment-term-netsuite-extract'
 
 export const Customers = new Sheet(
   'Customers',
@@ -56,6 +47,8 @@ export const Customers = new Sheet(
         'Records TRUE/FALSE. Please put TRUE if the Customer is an individual.',
     }),
 
+    // Add validation for Optional field if the Customer is an Individual. Leave blank for Companies.
+
     salutation: OptionField({
       label: 'Mr./Ms...',
       description:
@@ -70,6 +63,8 @@ export const Customers = new Sheet(
         '7': 'Rev',
       },
     }),
+
+    // Add validation Required field if the Customer is an Individual.
 
     firstname: TextField({
       label: 'First Name',
@@ -94,6 +89,8 @@ export const Customers = new Sheet(
         }
       },
     }),
+
+    //Required field if the Customer is an Individual.
 
     lastname: TextField({
       label: 'Last Name',
@@ -130,33 +127,42 @@ export const Customers = new Sheet(
       },
     }),
 
+    // need to link to validate against list of Netsuite Customers
+
     parent: TextField({
       label: 'Child Of',
       description:
         '(Need Lookup/Relational logic) ParentHandle field is used to create the Parent-Child Relationship for the Customers.  You can use parent Customer ID/Name or External ID. Please make sure to populate the template such that the Parent Records are given in rows above the Child records.',
     }),
 
-    status: LinkedField({
+    status: ReferenceField({
       label: 'Status',
+      sheetKey: 'Status_NetSuite_Extract',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'This field should have the reference to Customer statuses that must exist in your account prior to importing.  You can create a new Customer status at Setup > Sales > Customer Statuses > New.',
       required: true,
-      sheet: Status_NetSuite_Extract,
     }),
 
-    subsidiary: LinkedField({
+    subsidiary: ReferenceField({
       label: 'Subsidiary',
+      sheetKey: 'Subsidiary_NetSuite_Extract',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       description:
         '(array mapped to multiple FKs) This is a reference to the subsidiary which must be created in your account prior to import.    In case you want to refer a child subsidiary the complete hierarchy must be provided in the format: Parent Subsidiary Name : Child Subsidiary Name.  The delimiter to be used for selecting multiple subsidiaries is a pipe ( | ), without spaces between the two subsidiary references.  This field becomes mandatory if you are using a NetSuite One-World account.',
       required: true,
-      sheet: Subsidiary_NetSuite_Extract,
     }),
 
-    salesrep: LinkedField({
+    //need to link to validate against list of Netsuite Employees, Need to confirm look-up value
+    salesrep: ReferenceField({
       label: 'Sales Rep',
+      sheetKey: 'Employees',
+      foreignKey: 'entityId',
+      relationship: 'has-many',
       description:
         '(Lookup field) Provide the reference to the Sales Rep associated with this Customer. The Employee record must exist in your account prior to importing.   The Sales Rep checkbox must be marked in Lists > Employees > Human Resources.',
-      sheet: Sales_Rep_NetSuite_Extract,
     }),
 
     url: TextField({
@@ -171,11 +177,13 @@ export const Customers = new Sheet(
       },
     }),
 
-    category: LinkedField({
+    category: ReferenceField({
       label: 'Category',
+      sheetKey: 'Customer Category (NetSuite Extract)',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       description:
         'Provide the Category reference for this Customer.   It must exist in Setup > Accounting > Accounting Lists > New > Customer Category prior to importing.',
-      sheet: Customer_Category_NetSuite_Extract,
     }),
 
     defaultorderpriority: NumberField({
@@ -196,46 +204,136 @@ export const Customers = new Sheet(
       },
     }),
 
+    //add email validation here
+
     email: TextField({
       label: 'Email',
       description:
         'This field should contain the main E-mail Address of the Customer.  The Information entered for this field must conform to the standard e-mail Address format. i.e.user@domain.com',
+      validate: (value) => {
+        const regex = new RegExp('^$|^[w-.]+@([w-]+.)+[w-]{2,4}$', '')
+        if (!regex.test(value)) {
+          return [
+            new Message(
+              'The information entered for this field must conform to the standard e-mail Address format. i.e. user@domain.com.',
+              'error',
+              'validate'
+            ),
+          ]
+        }
+      },
     }),
+
+    //add email validation here
 
     altEmail: TextField({
       label: 'Alt. Email',
       description:
         'This field is only available for Individual Customers.  This field should contain the alternate E-mail Address of the Customer.    The Information entered for this field must conform to the standard e-mail Address format. i.e. user@domain.com.',
+      validate: (value) => {
+        const regex = new RegExp('^$|^[w-.]+@([w-]+.)+[w-]{2,4}$', '')
+        if (!regex.test(value)) {
+          return [
+            new Message(
+              'The information entered for this field must conform to the standard e-mail Address format. i.e. user@domain.com.',
+              'error',
+              'validate'
+            ),
+          ]
+        }
+      },
     }),
+
+    //add phone validation here
 
     phone: TextField({
       label: 'Phone',
       description:
         'The Information entered for this field can be in one of the following formats: 999-999-9999 (999) 999-9999 1-999-999-9999 1 (999) 999-9999 999-999-9999 ext 999 +44 (0) 1234-4567-568',
+      validate: (value) => {
+        const regex = new RegExp('^.{0,21}$', '')
+        if (!regex.test(value)) {
+          return [
+            new Message(
+              'Please enter up to 21 characters.',
+              'error',
+              'validate'
+            ),
+          ]
+        }
+      },
     }),
-
+    //add phone validation here
     altPhone: TextField({
       label: 'Alt. Phone',
       description:
         'This field is only available for Individual Customers.  The Information entered for this field can be in one of the following formats: 999-999-9999 (999) 999-9999 1-999-999-9999 1 (999) 999-9999 999-999-9999 ext 999 +44 (0) 1234-4567-568',
+      validate: (value) => {
+        const regex = new RegExp('^.{0,21}$', '')
+        if (!regex.test(value)) {
+          return [
+            new Message(
+              'Please enter up to 21 characters.',
+              'error',
+              'validate'
+            ),
+          ]
+        }
+      },
     }),
-
+    //add phone validation here
     mobilePhone: TextField({
       label: 'Mobile Phone',
       description:
         'This field is only available for Individual Customers.  The Information entered for this field can be in one of the following formats: 999-999-9999 (999) 999-9999 1-999-999-9999 1 (999) 999-9999 999-999-9999 ext 999 +44 (0) 1234-4567-568',
+      validate: (value) => {
+        const regex = new RegExp('^.{0,21}$', '')
+        if (!regex.test(value)) {
+          return [
+            new Message(
+              'Please enter up to 21 characters.',
+              'error',
+              'validate'
+            ),
+          ]
+        }
+      },
     }),
-
+    //add phone validation here
     homePhone: TextField({
       label: 'Home Phone',
       description:
         'This field is only available for Individual Customers.  The Information entered for this field can be in one of the following formats: 999-999-9999 (999) 999-9999 1-999-999-9999 1 (999) 999-9999 999-999-9999 ext 999 +44 (0) 1234-4567-568',
+      validate: (value) => {
+        const regex = new RegExp('^.{0,21}$', '')
+        if (!regex.test(value)) {
+          return [
+            new Message(
+              'Please enter up to 21 characters.',
+              'error',
+              'validate'
+            ),
+          ]
+        }
+      },
     }),
-
+    //add phone validation here
     fax: TextField({
       label: 'Fax',
       description:
         'The Information entered for this field can be in one of the following formats: 999-999-9999 (999) 999-9999 1-999-999-9999 1 (999) 999-9999 999-999-9999 ext 999 +44 (0) 1234-4567-568',
+      validate: (value) => {
+        const regex = new RegExp('^.{0,21}$', '')
+        if (!regex.test(value)) {
+          return [
+            new Message(
+              'Please enter up to 21 characters.',
+              'error',
+              'validate'
+            ),
+          ]
+        }
+      },
     }),
 
     Address1_AddressName: TextField({
@@ -309,12 +407,14 @@ export const Customers = new Sheet(
         }
       },
     }),
-
-    Address1_state: LinkedField({
+    // Needs to be valid for Country and may require some transformation - Flag for Paddy
+    Address1_state: ReferenceField({
       label: 'Province/State',
+      sheetKey: 'States_NetSuite_Extract',
+      foreignKey: 'State',
+      relationship: 'has-many',
       description:
         '(need Lookup field) Enter the State in this field. You may enter the standard abbreviation or the full state or province name.',
-      sheet: States_NetSuite_Extract,
     }),
 
     Address1_zipCode: TextField({
@@ -322,12 +422,16 @@ export const Customers = new Sheet(
       description: 'Enter the Zip Code of the Address in this field.',
     }),
 
-    Address1_country: LinkedField({
+    //Reference to NetSuite
+
+    Address1_country: ReferenceField({
       label: 'Country',
+      sheetKey: 'Countries (NetSuite Extract)',
+      foreignKey: 'Countries',
+      relationship: 'has-many',
       description:
         '(need Lookup field) This is the Reference to the Country of this Address. It must match the List of the Countries in NetSuite.',
       required: true,
-      sheet: Countries_NetSuite_Extract,
     }),
 
     Address1_defaultBilling: BooleanField({
@@ -347,25 +451,31 @@ export const Customers = new Sheet(
       description: 'Account Number shared with the Customer.',
     }),
 
-    defaultreceivablesaccount: LinkedField({
+    defaultreceivablesaccount: ReferenceField({
       label: 'Default Receivables Account',
+      sheetKey: 'Chart of Accounts (NetSuite Extract)',
+      foreignKey: 'Account Name',
+      relationship: 'has-many',
       description:
         "(need Lookup field) Choose the A/R account to use by default on receivables transactions for this customer.  If you select Use System Preference, the account selected at Setup > Accounting > Accounting Preferences > Items/Transactions in the Default Receivables Account field is used as this customer's default.",
-      sheet: Chart_of_Accounts_NetSuite_Extract,
     }),
 
-    currency: LinkedField({
+    currency: ReferenceField({
       label: 'Currency',
+      sheetKey: 'Currency (NetSuite Extract)',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       description:
-        'This element is a reference to a currency record that must exist in  your account prior to importing.  The currency used must match the  currency selected on the customer’s record.',
-      sheet: Currency_NetSuite_Extract,
+        "This element is a reference to a currency record that must exist in  your account prior to importing.  The currency used must match the  currency selected on the customer's record.",
     }),
 
-    terms: LinkedField({
+    terms: ReferenceField({
       label: 'Terms',
+      sheetKey: 'Terms (NetSuite Extract)',
+      foreignKey: 'description',
+      relationship: 'has-many',
       description:
         '(need enum values) This field should have the  reference to default terms that you have with this Customer.   These records must exist in Setup > Accounting > Accounting Lists > Terms prior to importing.',
-      sheet: Payment_Term_NetSuite_Extract,
     }),
 
     creditlimit: TextField({
@@ -402,10 +512,16 @@ export const Customers = new Sheet(
         "If you do not collect Sales tax from this Customer because your merchandise will be resold, enter your Customer's appropriate tax license number here.",
     }),
 
+    //need to add default value here - is this still a bug?
     emailTransaction: BooleanField({
       label: 'Email Transaction',
       description:
         "Defaults to False - don't want customer to override the value",
+      default: false,
+      annotations: {
+        default: true,
+        defaultMessage: 'Field was defaulted to False',
+      },
     }),
 
     inactive: BooleanField({
