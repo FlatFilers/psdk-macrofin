@@ -14,7 +14,7 @@ import { SmartDateField } from '../../src/SmartDateField'
 export const Open_Amortization_Schedule = new Sheet(
   'Open Amortization Schedule',
   {
-    //This should be generated from FlatFile (Is this something flatfile can do?) The ideal value is a combination of the transID, subsidary and currency with a prefix of OB_AS
+    //This should be generated from FlatFile (Is this something flatfile can do?) The ideal value is a combination of the transID, subsidary and currency with a prefix of OB_AS. This is the Unique backend Identifier. Can be generated from flatfile in absence of any Unique backend identifier but netsuite can generate this also.
 
     externalid: TextField({
       label: 'External ID',

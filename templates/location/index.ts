@@ -12,6 +12,9 @@ import {
 
 export const Location = new Sheet(
   'Location',
+
+  //The locations will always come from NetSuite - the consultant may update locations throughout the project but this should push into FlatFile
+
   {
     //No Validation
     externalid: TextField({
@@ -27,7 +30,7 @@ export const Location = new Sheet(
       unique: true,
     }),
 
-    //Should Validate against a list of exsisting locations from a specific NetSuite environment
+    //Should Validate against a list of exsisting locations from a specific NetSuite environment - Yes the parent locations should validate against a list of existing locations. Parent locations will be created before child locations so a validation will be possible
     parent: TextField({
       label: 'Parent',
       required: false,

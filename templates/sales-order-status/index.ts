@@ -13,7 +13,8 @@ import {
 export const Sales_Order_Status = new Sheet(
   'Sales Order Status',
   {
-    // Standard Values: Pending Fulfillment, Pending Approval, Pending Billing
+    // Standard Values: Pending Fulfillment, Pending Approval, Pending Billing - these statuses will be managed by the consultant only. If any additional statuses are to be added they will be added by the consultant /integration
+
     statusName: TextField({
       label: 'Status Name',
       required: true,

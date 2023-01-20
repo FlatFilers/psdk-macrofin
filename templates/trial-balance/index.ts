@@ -25,7 +25,7 @@ export const Trial_Balance = new Sheet(
       unique: true,
     }),
 
-    //This should be Non Editable field as this will be populated by NetSuite
+    //This should be Non Editable field as this will be populated by NetSuite - required, but marked as non-editable and populated by NetSuite - will need to find a workaround for this
     tranid: TextField({
       label: 'Tran ID',
       description: 'This is used to group the transaction lines together.',
@@ -48,7 +48,7 @@ export const Trial_Balance = new Sheet(
       sheet: Subsidiary_NetSuite_Extract,
     }),
 
-    //This should be the internal ID of the Subsidary selected in Column C
+    //This should be the internal ID of the Subsidary selected in Column C - lookup field!
     SubsidiaryID: TextField({
       label: 'Subsidiary ID',
       description:
@@ -65,7 +65,7 @@ export const Trial_Balance = new Sheet(
       required: true,
     }),
 
-    // This is a numerical field
+    // This is a numerical field - No we can leave this as a decimal number with a Maximum of 8 decimal places
     exchangeRate: NumberField({
       label: 'Exchange Rate',
       required: true,
@@ -83,7 +83,7 @@ export const Trial_Balance = new Sheet(
       },
     }),
 
-    //Should follow the format  MMM YYYY
+    //Should follow the format  MMM YYYY - This is the accounting period based on the transaction date. it should follow the format MMM YYYY (e.g. JAN 2022)
     postingPeriod: TextField({
       label: 'Posting Period',
       description:
@@ -116,7 +116,7 @@ export const Trial_Balance = new Sheet(
         }
       },
     }),
-    // This column should filter from the Charts of Accounts Worksheet
+    // This column should filter from the Charts of Accounts Worksheet - Account - this should source from the Chart of account worksheet
     account: LinkedField({
       label: 'Account',
       required: true,

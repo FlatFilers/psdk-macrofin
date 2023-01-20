@@ -54,7 +54,8 @@ export const Employees = new Sheet(
       },
     }),
 
-    //Do we need a default value here?
+    //Do we need a default value here? - We don't need one but if one is required then it will be "FALSE"
+
     isInactive: BooleanField({
       label: 'Is Inactive',
       description: 'Enter TRUE here if this account is inactive.',
@@ -107,7 +108,7 @@ export const Employees = new Sheet(
       },
     }),
 
-    //Need to Add Email Validation!
+    //Need to Add Email Validation! - The email formatting should following the following criteria - Recipient name + @ symbol + Domain name + Top-level domain
 
     email: TextField({
       label: 'Email',
@@ -268,7 +269,7 @@ export const Employees = new Sheet(
         'Enter the employee status.  This must be created in Setup > Accounting > Employee Related Lists > Employee Status.',
     }),
 
-    //Should source against this employees list
+    //Should source against this employees list in NetSuite
     supervisor: TextField({
       label: 'Supervisor',
       description:
