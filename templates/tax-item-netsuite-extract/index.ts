@@ -8,9 +8,8 @@ import {
   TextField,
   Workbook,
   Message,
+  ReferenceField,
 } from '@flatfile/configure'
-
-import { Countries_NetSuite_Extract } from '../countries-netsuite-extract'
 
 export const Tax_Item_NetSuite_Extract = new Sheet(
   'Tax Item (NetSuite Extract)',
@@ -29,9 +28,11 @@ export const Tax_Item_NetSuite_Extract = new Sheet(
       label: 'VAT Rate',
     }),
 
-    country: LinkedField({
+    country: ReferenceField({
       label: 'Country',
-      sheet: Countries_NetSuite_Extract,
+      sheetKey: 'Countries (NetSuite Extract)',
+      foreignKey: 'Countries',
+      relationship: 'has-many',
     }),
   },
   {

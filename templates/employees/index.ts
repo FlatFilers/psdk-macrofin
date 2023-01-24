@@ -8,6 +8,7 @@ import {
   TextField,
   Workbook,
   Message,
+  ReferenceField,
 } from '@flatfile/configure'
 import { SmartDateField } from '../../src/SmartDateField'
 
@@ -190,8 +191,11 @@ export const Employees = new Sheet(
 
     //Should validate against subsidary List
 
-    subsidiary: TextField({
+    subsidiary: ReferenceField({
       label: 'Subsidiary',
+      sheetKey: 'Subsidiary_NetSuite_Extract',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       description:
         'This is a reference to the subsidiary which must be created in your account prior to import.    In case you want to refer a child subsidiary the complete hierarchy must be provided in the format: Parent Subsidiary Name : Child Subsidiary Name.  The delimiter to be used for selecting multiple subsidiaries is a pipe ( | ), without spaces between the two subsidiary references.  This field becomes mandatory if you are using a NetSuite One-World account.',
       required: true,
@@ -201,6 +205,9 @@ export const Employees = new Sheet(
 
     department: TextField({
       label: 'Department',
+      sheetKey: 'Department',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'A reference to a department that must exist in Setup > Company > Department prior to import.',
     }),
@@ -209,6 +216,9 @@ export const Employees = new Sheet(
 
     class: TextField({
       label: 'Class',
+      sheetKey: 'Class',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'A reference to a class that must exist in Setup > Company > Classes prior to import.',
     }),
@@ -217,11 +227,14 @@ export const Employees = new Sheet(
 
     location: TextField({
       label: 'Location',
+      sheetKey: 'Location',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'A reference to a location that must exist in Setup > Company > Locations prior to import.',
     }),
 
-    //Should source from employee type list
+    //Should source from employee type list - Need more information here!
 
     employeetype: TextField({
       label: 'Employee Type',
@@ -440,6 +453,9 @@ export const Employees = new Sheet(
     //Validate against country list in NetSuite
     address1_country: TextField({
       label: 'Address 1 - Country',
+      sheetKey: 'Countries_NetSuite_Extract',
+      foreignKey: 'Countries',
+      relationship: 'has-many',
       description:
         'This is the Reference to the Country of this Address. It must match the List of the Countries in NetSuite',
     }),
@@ -513,6 +529,9 @@ export const Employees = new Sheet(
     //Validate against country list in NetSuite
     address2_country: TextField({
       label: 'Address 2 - Country',
+      sheetKey: 'Countries_NetSuite_Extract',
+      foreignKey: 'Countries',
+      relationship: 'has-many',
       description:
         'This is the Reference to the Country of this Address. It must match the List of the Countries in NetSuite',
     }),

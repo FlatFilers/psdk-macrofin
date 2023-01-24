@@ -8,9 +8,8 @@ import {
   TextField,
   Workbook,
   Message,
+  ReferenceField,
 } from '@flatfile/configure'
-
-import { Currency_NetSuite_Extract } from '../currency-netsuite-extract'
 
 export const Subsidiary_NetSuite_Extract = new Sheet(
   'Subsidiary (NetSuite Extract)',
@@ -29,9 +28,11 @@ export const Subsidiary_NetSuite_Extract = new Sheet(
       unique: true,
     }),
 
-    currency: LinkedField({
+    currency: ReferenceField({
       label: 'Currency',
-      sheet: Currency_NetSuite_Extract,
+      sheetKey: 'Currency (NetSuite Extract)',
+      foreignKey: 'Name',
+      relationship: 'has-many',
     }),
 
     inactive: BooleanField({

@@ -3,7 +3,7 @@ import {
   DateField,
   NumberField,
   OptionField,
-  LinkedField,
+  ReferenceField,
   Sheet,
   TextField,
   Workbook,
@@ -38,8 +38,11 @@ export const Location = new Sheet(
     }),
 
     //Should validate against Subsidary sheet
-    subsidiary: TextField({
+    subsidiary: ReferenceField({
       label: 'Subsidiary',
+      sheetKey: 'Subsidiary_NetSuite_Extract',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       required: false,
       unique: false,
     }),
@@ -52,8 +55,10 @@ export const Location = new Sheet(
     }),
 
     //Should validate against country Worksheet
-    Address_country: TextField({
+    Address_country: ReferenceField({
       label: 'Address Country',
+      sheetKey: 'Countries_NetSuite_Extract',
+      foreignKey: 'Countries',
       required: false,
       unique: false,
     }),

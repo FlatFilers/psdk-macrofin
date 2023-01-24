@@ -3,16 +3,12 @@ import {
   DateField,
   NumberField,
   OptionField,
-  LinkedField,
+  ReferenceField,
   Sheet,
   TextField,
   Workbook,
   Message,
 } from '@flatfile/configure'
-
-import { Vendor } from '../vendor'
-import { Currency_NetSuite_Extract } from '../currency-netsuite-extract'
-import {Subsidiary_NetSuite_Extract} from '../subsidiary-netsuite-extract'
 
 //import due_date_to_yyyy_mm_dd from './hooks/due-date-to-yyyy-mm-dd.js'
 //import transaction_date_to_yyyy_mm_dd from './hooks/transaction-date-to-yyyy-mm-dd.js'
@@ -35,42 +31,51 @@ export const Open_AP_Template = new Sheet(
       },
     }),
 
-    company_name: LinkedField({
+    company_name: ReferenceField({
       label: 'Company Name',
+      sheetKey: 'Vendor',
+      foreignKey: 'companyName',
+      relationship: 'has-many',
       description:
         'This is a reference to the company name of the record that must exist in your account prior to import.',
       required: true,
-      sheet: Vendor,
     }),
 
-    subsidiary: LinkedField({
+    subsidiary: ReferenceField({
       label: 'Subsidiary',
+      sheetKey: 'Subsidiary_NetSuite_Extract',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       description:
         'This is a reference to the subsidiary of the record that match the selected subsidiary on the entity record.',
       required: true,
-      sheet: Subsidiary_NetSuite_Extract,
     }),
 
-    currency: LinkedField({
+    currency: ReferenceField({
       label: 'Currency',
+      sheetKey: 'Currency (NetSuite Extract)',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       description:
         'This is a reference to a currency that must exist in your account prior to import. The currency used must match the currency selected on the customer’s record.',
       required: true,
-      sheet: Currency_NetSuite_Extract,
     }),
 
     exchangeRate: NumberField({
       label: 'Exchange Rate',
       description:
         'Enter the currency exchange rate as of cutover date for the transaction.  Ask your lead consultant for details.',
-        default: 1,
-        annotations: {
-          default: true,
-          defaultMessage: 'Exchange Rate was not provided, it has been set to ',
-          compute: true,
-          computeMessage: 'This value was automatically reformatted to eight decimal places. Original value was: ',
-        },
-        compute: (v: number) => {return Number(v.toFixed(8))},
+      default: 1,
+      annotations: {
+        default: true,
+        defaultMessage: 'Exchange Rate was not provided, it has been set to ',
+        compute: true,
+        computeMessage:
+          'This value was automatically reformatted to eight decimal places. Original value was: ',
+      },
+      compute: (v: number) => {
+        return Number(v.toFixed(8))
+      },
     }),
 
     postingPeriod: TextField({
@@ -80,7 +85,7 @@ export const Open_AP_Template = new Sheet(
       default: 'Aug 2021',
       annotations: {
         default: true,
-        defaultMessage: 'Posting Period was automatically set.'
+        defaultMessage: 'Posting Period was automatically set.',
       },
     }),
 
@@ -148,22 +153,24 @@ export const Open_AP_Template = new Sheet(
       label: 'Transaction Amount',
       description:
         'This is the column is calculated by multiplying the rate to the quantity.  Formula driven do not override.',
-        annotations: {
-          compute: true,
-          computeMessage: 'This value was automatically reformatted to two decimal places. Original value was: ',
-        },
-        //compute: (v: number) => {return Number(v.toFixed(2))},
+      annotations: {
+        compute: true,
+        computeMessage:
+          'This value was automatically reformatted to two decimal places. Original value was: ',
+      },
+      //compute: (v: number) => {return Number(v.toFixed(2))},
     }),
 
     Base_Currency_Amount: NumberField({
       label: 'Base Currency Amount',
       description:
         'This is the column is calculated by multiplying the Transaction Amount to the Exchange Rate to calculate the amount that is going to be posted to the general ledger.  Formula driven. Do not override.',
-        annotations: {
-          compute: true,
-          computeMessage: 'This value was automatically reformatted to two decimal places. Original value was: ',
-        },
-        //compute: (v: number) => {return Number(v.toFixed(2))},
+      annotations: {
+        compute: true,
+        computeMessage:
+          'This value was automatically reformatted to two decimal places. Original value was: ',
+      },
+      //compute: (v: number) => {return Number(v.toFixed(2))},
     }),
 
     itemLine_department: TextField({

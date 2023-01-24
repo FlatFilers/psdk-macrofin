@@ -8,10 +8,9 @@ import {
   TextField,
   Workbook,
   Message,
+  ReferenceField,
 } from '@flatfile/configure'
 
-import { Chart_of_Accounts_NetSuite_Extract } from '../chart-of-accounts-netsuite-extract'
-import { Subsidiary_NetSuite_Extract } from '../subsidiary-netsuite-extract'
 import { SmartDateField } from '../../src/SmartDateField'
 
 export const Trial_Balance = new Sheet(
@@ -40,12 +39,14 @@ export const Trial_Balance = new Sheet(
     }),
 
     //This should from the Subsidary List and should populate the Subsidary Name
-    Subsidiary: LinkedField({
+    Subsidiary: ReferenceField({
       label: 'Subsidiary',
+      sheetKey: 'Subsidiary_NetSuite_Extract',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       description:
         'This is a reference to the subsidiary which must be created in your Setup > Company > Subsidiaries prior to import.',
       required: true,
-      sheet: Subsidiary_NetSuite_Extract,
     }),
 
     //This should be the internal ID of the Subsidary selected in Column C - lookup field!
@@ -54,7 +55,6 @@ export const Trial_Balance = new Sheet(
       description:
         'This is a reference to the subsidiary which must be created in your Setup > Company > Subsidiaries prior to import.',
       required: false,
-      //sheet: Subsidiary_NetSuite_Extract,
     }),
 
     //This should source from the Currency sheet
@@ -218,6 +218,11 @@ export const Trial_Balance = new Sheet(
           'debit',
           'Either credit or debit should be populated per line'
         )
+      }
+      const links = record.getLinks('Subsidiary')
+      const SubsidiaryID = links[0].Internal_Id
+      if (!!SubsidiaryID) {
+        record.set('SubsidiaryID', SubsidiaryID)
       }
     },
   }

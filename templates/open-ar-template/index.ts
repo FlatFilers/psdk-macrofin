@@ -3,16 +3,12 @@ import {
   DateField,
   NumberField,
   OptionField,
-  LinkedField,
+  ReferenceField,
   Sheet,
   TextField,
   Workbook,
   Message,
 } from '@flatfile/configure'
-
-import { Subsidiary_NetSuite_Extract } from '../subsidiary-netsuite-extract'
-import { Currency_NetSuite_Extract } from '../currency-netsuite-extract'
-import { Customers } from '../customers'
 
 import set_transaction_amount_base_currency_amount from './hooks/set-transaction-amount-base-currency-amount.js'
 //import transaction_date_to_yyyy_mm_dd from './hooks/transaction-date-to-yyyy-mm-dd.js'
@@ -35,28 +31,34 @@ export const Open_AR_Template = new Sheet(
       },
     }),
 
-    company_name: LinkedField({
+    company_name: ReferenceField({
       label: 'Company Name',
+      sheetKey: 'Customers',
+      foreignKey: 'companyname',
+      relationship: 'has-many',
       description:
         'This is a reference to the company name of the record that must exist in your account prior to import.',
       required: true,
-      sheet: Customers,
     }),
 
-    subsidiary: LinkedField({
+    subsidiary: ReferenceField({
       label: 'Subsidiary',
+      sheetKey: 'Subsidiary_NetSuite_Extract',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       description:
         'This is a reference to the subsidiary of the record that match the selected subsidiary on the entity record.',
       required: true,
-      sheet: Subsidiary_NetSuite_Extract,
     }),
 
-    currency: LinkedField({
+    currency: ReferenceField({
       label: 'Currency',
+      sheetKey: 'Currency (NetSuite Extract)',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       description:
         'This is a reference to a currency that must exist in your account prior to import. The currency used must match the currency selected on the customer’s record.',
       required: true,
-      sheet: Currency_NetSuite_Extract,
     }),
 
     exchangeRate: NumberField({

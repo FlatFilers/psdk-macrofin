@@ -23,7 +23,7 @@ export const Payment_Term_NetSuite_Extract = new Sheet(
       unique: true,
     }),
 
-    daysUntilNetDue: TextField({
+    daysUntilNetDue: NumberField({
       label: 'Days Until Net Due',
     }),
   },

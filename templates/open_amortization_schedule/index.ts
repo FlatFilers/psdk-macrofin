@@ -8,6 +8,7 @@ import {
   TextField,
   Workbook,
   Message,
+  ReferenceField,
 } from '@flatfile/configure'
 import { SmartDateField } from '../../src/SmartDateField'
 
@@ -38,8 +39,11 @@ export const Open_Amortization_Schedule = new Sheet(
       unique: false,
     }),
     //Source from: Currency List
-    currency: TextField({
+    currency: ReferenceField({
       label: 'Currency',
+      sheetKey: 'Currency (NetSuite Extract)',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       required: true,
       unique: false,
     }),
@@ -82,8 +86,11 @@ export const Open_Amortization_Schedule = new Sheet(
     }),
 
     //Source from: Charts of accounts
-    journalItemLine_account: TextField({
+    journalItemLine_account: ReferenceField({
       label: 'Journal Item Line Account',
+      sheetKey: 'Chart of Accounts (NetSuite Extract)',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       required: true,
     }),
 
@@ -96,6 +103,9 @@ export const Open_Amortization_Schedule = new Sheet(
     //Source from: Vendor List
     journalItemLine_entityRef: TextField({
       label: 'Journal Item Line Entity Ref',
+      sheetKey: 'Vendor',
+      foreignKey: 'companyName',
+      relationship: 'has-many',
       required: true,
     }),
 
@@ -147,8 +157,10 @@ export const Open_Amortization_Schedule = new Sheet(
 
     //This should source from the Department List
 
-    journalItemLine_department: TextField({
+    journalItemLine_department: ReferenceField({
       label: 'Journal Item Line Department',
+      sheetKey: 'Department',
+      foreignKey: 'name',
       description:
         'This should be the #N/A value of the segment.  Formula driven. Do not override.',
     }),
@@ -157,6 +169,9 @@ export const Open_Amortization_Schedule = new Sheet(
 
     journalItemLine_class: TextField({
       label: 'Journal Item Line Class',
+      sheetKey: 'Class',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'This should be the #N/A value of the segment.  Formula driven. Do not override.',
     }),
@@ -165,6 +180,9 @@ export const Open_Amortization_Schedule = new Sheet(
 
     journalItemLine_location: TextField({
       label: 'Journal Item Line Location',
+      sheetKey: 'Location',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'This should be the #N/A value of the segment.  Formula driven. Do not override.',
     }),

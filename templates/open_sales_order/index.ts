@@ -8,6 +8,7 @@ import {
   TextField,
   Workbook,
   Message,
+  ReferenceField,
 } from '@flatfile/configure'
 import { SmartDateField } from '../../src/SmartDateField'
 
@@ -32,8 +33,11 @@ export const Open_Sales_Order = new Sheet(
     }),
 
     //Source from: Customer List
-    customer: TextField({
+    customer: ReferenceField({
       label: 'Customer',
+      sheetKey: 'Customers',
+      foreignKey: 'customerName',
+      relationship: 'has-many',
       required: true,
       unique: false,
     }),
@@ -48,6 +52,9 @@ export const Open_Sales_Order = new Sheet(
     //Should source from Sales order Status sheet
     status: TextField({
       label: 'Status',
+      sheetKey: 'Status (NetSuite Extract)',
+      foreignKey: 'name',
+      relationship: 'has-many',
       required: true,
     }),
 
@@ -87,6 +94,9 @@ export const Open_Sales_Order = new Sheet(
     //Should source from employee list which are maked as Sales rep
     salesRep: TextField({
       label: 'Sales Rep',
+      sheetKey: 'Employees',
+      foreignKey: 'entityId',
+      relationship: 'has-many',
       required: false,
     }),
 
@@ -103,7 +113,7 @@ export const Open_Sales_Order = new Sheet(
     }),
 
     //Free text field - will be updating validation in the future
-    leadSource: BooleanField({
+    leadSource: TextField({
       label: 'Lead Source',
       required: false,
     }),
@@ -116,38 +126,53 @@ export const Open_Sales_Order = new Sheet(
     }),
 
     //Should source from partner sheet
-    partner: BooleanField({
+    partner: ReferenceField({
       label: 'Partner',
+      sheetKey: 'Partners',
+      foreignKey: 'partnerName',
+      relationship: 'has-many',
       required: false,
     }),
 
     //This should source from the Department List
 
-    department: TextField({
+    department: ReferenceField({
       label: 'Department',
+      sheetKey: 'Department',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'This should be the #N/A value of the segment.  Formula driven. Do not override.',
     }),
 
     //This should source from the Class List
 
-    class: TextField({
+    class: ReferenceField({
       label: 'Class',
+      sheetKey: 'Class',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'This should be the #N/A value of the segment.  Formula driven. Do not override.',
     }),
 
     //This should source from the Location List
 
-    location: TextField({
+    location: ReferenceField({
       label: 'Location',
+      sheetKey: 'Location',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'This should be the #N/A value of the segment.  Formula driven. Do not override.',
     }),
 
     //This should source from the Currency sheet
-    Currency: TextField({
+    Currency: ReferenceField({
       label: 'Currency',
+      sheetKey: 'Currency (NetSuite Extract)',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       description:
         'Enter the transaction currency to be used.  This is a reference to the Currency record which must be created under Lists > Accounting > Currencies prior to import.',
       required: true,
@@ -219,6 +244,9 @@ export const Open_Sales_Order = new Sheet(
 
     billingSchedule: TextField({
       label: 'Billing Schedule',
+      sheetKey: 'Billing Schedule',
+      foreignKey: 'billingScheduleName',
+      relationship: 'has-many',
       required: true,
     }),
 
