@@ -13,7 +13,7 @@ import { Tax_Item_NetSuite_Extract } from '../templates/tax-item-netsuite-extrac
 import { Terms_NetSuite_Extract } from '../templates/terms-netsuite-extract'
 import { Currency_NetSuite_Extract } from '../templates/currency-netsuite-extract'
 import { Status_NetSuite_Extract } from '../templates/status-netsuite-extract'
-import { Customer_Vendor_NetSuite_Extract } from '../templates/customer-vendor-netsuite-extract'
+import { Customer_Vendor_NetSuite_Extract } from '../DNU_Old_Templates/customer-vendor-netsuite-extract'
 import { Language_NetSuite_Extract } from '../templates/language-netsuite-extract'
 import { Payment_Term_NetSuite_Extract } from '../templates/payment-term-netsuite-extract'
 import { Customer_Category_NetSuite_Extract } from '../templates/customer-category-netsuite-extract'

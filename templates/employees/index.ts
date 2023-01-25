@@ -203,7 +203,7 @@ export const Employees = new Sheet(
 
     //Should validate against the department list
 
-    department: TextField({
+    department: ReferenceField({
       label: 'Department',
       sheetKey: 'Department',
       foreignKey: 'name',
@@ -214,7 +214,7 @@ export const Employees = new Sheet(
 
     //Should validate against the class list
 
-    class: TextField({
+    class: ReferenceField({
       label: 'Class',
       sheetKey: 'Class',
       foreignKey: 'name',
@@ -225,7 +225,7 @@ export const Employees = new Sheet(
 
     //Should validate against the location list
 
-    location: TextField({
+    location: ReferenceField({
       label: 'Location',
       sheetKey: 'Location',
       foreignKey: 'name',
@@ -275,7 +275,7 @@ export const Employees = new Sheet(
       },
     }),
 
-    //Should source from employee status list
+    //Should source from employee status list - need more information here
     employeestatus: TextField({
       label: 'Employee Status',
       description:
@@ -439,8 +439,11 @@ export const Employees = new Sheet(
     }),
 
     //can we validate the states against the countries
-    address1_state: TextField({
+    address1_state: ReferenceField({
       label: 'Address 1 - State',
+      sheetKey: 'States_NetSuite_Extract',
+      foreignKey: 'State',
+      relationship: 'has-many',
       description:
         'Enter the State in this field. You may enter the standard abbreviation or the full state or province name.',
     }),
@@ -517,6 +520,9 @@ export const Employees = new Sheet(
     //can we validate the states against the countries
     address2_state: TextField({
       label: 'Address 2 - State',
+      sheetKey: 'States_NetSuite_Extract',
+      foreignKey: 'State',
+      relationship: 'has-many',
       description:
         'Enter the State in this field. You may enter the standard abbreviation or the full state or province name.',
     }),
@@ -527,7 +533,7 @@ export const Employees = new Sheet(
     }),
 
     //Validate against country list in NetSuite
-    address2_country: TextField({
+    address2_country: ReferenceField({
       label: 'Address 2 - Country',
       sheetKey: 'Countries_NetSuite_Extract',
       foreignKey: 'Countries',

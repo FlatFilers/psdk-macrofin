@@ -38,7 +38,7 @@ export const Classes = new Sheet(
     //Should validate against Subsidary from a specific NetSuite environment
     subsidiary: ReferenceField({
       label: 'Subsidiary',
-      sheetKey: 'Subsidiary (NetSuite Extract)',
+      sheetKey: 'Subsidiary_NetSuite_Extract',
       foreignKey: 'Name',
       relationship: 'has-many',
       required: true,

@@ -3,22 +3,12 @@ import {
   DateField,
   NumberField,
   OptionField,
-  LinkedField,
+  ReferenceField,
   Sheet,
   TextField,
   Workbook,
   Message,
 } from '@flatfile/configure'
-
-import { Subsidiary_NetSuite_Extract } from '../subsidiary-netsuite-extract'
-import { Currency_NetSuite_Extract } from '../currency-netsuite-extract'
-import { Payment_Term_NetSuite_Extract } from '../payment-term-netsuite-extract'
-import { States_NetSuite_Extract } from '../states-netsuite-extract'
-import { Countries_NetSuite_Extract } from '../countries-netsuite-extract'
-import { Vendor_Category_NetSuite_Extract } from '../vendor-category-netsuite-extract'
-import { Chart_of_Accounts_NetSuite_Extract } from '../chart-of-accounts-netsuite-extract'
-import { Price_Level_NetSuite_Extract } from '../price-level-netsuite-extract'
-import { Tax_Item_NetSuite_Extract } from '../tax-item-netsuite-extract'
 
 import default_address_addressee_to_company_name from './hooks/default-address1_addressee-to-company-name.js'
 
@@ -92,12 +82,14 @@ export const Vendor = new Sheet(
       },
     }),
 
-    subsidiary: LinkedField({
+    subsidiary: ReferenceField({
       label: 'Subsidiary',
+      sheetKey: 'Subsidiary_NetSuite_Extract',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       description:
         'This is a reference to the subsidiary which must be created in your account prior to import. Select from the drop down field.',
       required: true,
-      sheet: Subsidiary_NetSuite_Extract,
     }),
 
     email: TextField({
@@ -124,18 +116,22 @@ export const Vendor = new Sheet(
         'The Information entered for this field can be in one of the following formats: 999-999-9999 (999) 999-9999 1-999-999-9999 1 (999) 999-9999 999-999-9999 ext 999 +44 (0) 1234-4567-568',
     }),
 
-    currency: LinkedField({
+    currency: ReferenceField({
       label: 'Currency',
+      sheetKey: 'Currency_NetSuite_Extract',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       description:
         'This is mandatory if you use Multiple Currencies.   It is a reference to a currency record that must exist in Lists > Accounting > Currencies prior to importing.',
-      sheet: Currency_NetSuite_Extract,
     }),
 
-    terms: LinkedField({
+    terms: ReferenceField({
       label: 'Terms',
+      sheetKey: 'Payment_Term_NetSuite_Extract',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'This field should have the  reference to default terms that you have with this Vendor.   These records must exist in Setup > Accounting > Accounting Lists > Terms prior to importing.',
-      sheet: Payment_Term_NetSuite_Extract,
     }),
 
     address1_Label: TextField({
@@ -210,11 +206,15 @@ export const Vendor = new Sheet(
       },
     }),
 
-    address1_state: LinkedField({
+    // State will need to be valid for Country
+
+    address1_state: ReferenceField({
       label: 'Address1 State',
+      sheetKey: 'States_NetSuite_Extract',
+      foreignKey: 'State',
+      relationship: 'has-many',
       description:
         'Enter the State in this field. You may enter the standard abbreviation or the full state or province name.',
-      sheet: States_NetSuite_Extract,
     }),
 
     Address1_zipCode: TextField({
@@ -222,11 +222,13 @@ export const Vendor = new Sheet(
       description: 'Enter the Zip Code of the Address in this field.',
     }),
 
-    Address1_Country: LinkedField({
+    Address1_Country: ReferenceField({
       label: 'Address1 Country',
+      sheetKey: 'Countries_NetSuite_Extract',
+      foreignKey: 'Countries',
+      relationship: 'has-many',
       description:
         'This is the Reference to the Country of this Address. It must match the List of the Countries in NetSuite.',
-      sheet: Countries_NetSuite_Extract,
     }),
 
     Address1_defaultBilling: BooleanField({
@@ -247,11 +249,13 @@ export const Vendor = new Sheet(
         'If marked as TRUE, new transactions created for the Vendor will automatically gets sent out to the third party. Make sure to set this to FALSE for the initial import. If required to be enabled, Vendor lists needs to be updated after cutover.',
     }),
 
-    category: LinkedField({
+    category: ReferenceField({
       label: 'Category',
+      sheetKey: 'Vendor_Category_NetSuite_Extract',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'Provide the Category reference for this Vendor.   It must exist in Setup > Accounting > Accounting Lists > New > Vendor Category prior to importing.',
-      sheet: Vendor_Category_NetSuite_Extract,
     }),
 
     isInactive: BooleanField({
@@ -260,16 +264,20 @@ export const Vendor = new Sheet(
         'This is used to mark the Vendor as Inactive at the time of Import',
     }),
 
-    payablesAccount: LinkedField({
+    payablesAccount: ReferenceField({
       label: 'Payables Account',
-      sheet: Chart_of_Accounts_NetSuite_Extract,
+      sheetKey: 'Chart_of_Accounts_NetSuite_Extract',
+      foreignKey: 'Account Name',
+      relationship: 'has-many',
     }),
 
-    priceLevel: LinkedField({
+    priceLevel: ReferenceField({
       label: 'Price Level',
+      sheetKey: 'Price_Level_NetSuite_Extract',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'This is a reference to a default price level at which you sell your items to this Vendor.   The Price Levels must exist in Setup > Accounting > Accounting List > Price Level prior to importing.',
-      sheet: Price_Level_NetSuite_Extract,
     }),
 
     creditLimit: NumberField({
@@ -278,11 +286,13 @@ export const Vendor = new Sheet(
         'This is the Credit Limit you would want to set for the Sales transactions with this Vendor.',
     }),
 
-    taxItem: LinkedField({
+    taxItem: ReferenceField({
       label: 'Tax Item',
+      sheetKey: 'Tax_Item_NetSuite_Extract',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'This is a reference to a default Sales tax item that applies to this Vendor.   The Sales Tax item must exist in Setup > Accounting > Tax Codes prior to importing.',
-      sheet: Tax_Item_NetSuite_Extract,
     }),
 
     vatregnumber: TextField({
@@ -296,12 +306,18 @@ export const Vendor = new Sheet(
       },
     }),
 
-    additionalCurrencies: LinkedField({
+    // Will this need to be a multi-select field? Will we need to validate this not primary currency?
+
+    additionalCurrencies: ReferenceField({
       label: 'Additional Currencies',
+      sheetKey: 'Currency_NetSuite_Extract',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       description:
         'Add additional currencies outside of the primary currency that the Vendor uses.',
-      sheet: Currency_NetSuite_Extract,
     }),
+
+    //Will we be able to consolidate address fields?
 
     Address2_attention: TextField({
       label: 'Address2 Attention',
@@ -363,11 +379,15 @@ export const Vendor = new Sheet(
       },
     }),
 
-    Address2_state: LinkedField({
+    // State will need to be valid for Country
+
+    Address2_state: ReferenceField({
       label: 'Address2 State',
+      sheetKey: 'States_NetSuite_Extract',
+      foreignKey: 'State',
+      relationship: 'has-many',
       description:
         'Enter the State in this field. You may enter the standard abbreviation or the full state or province name.',
-      sheet: States_NetSuite_Extract,
     }),
 
     Address2_zipCode: TextField({
@@ -375,11 +395,13 @@ export const Vendor = new Sheet(
       description: 'Enter the Zip Code of the Address in this field.',
     }),
 
-    Address2_country: LinkedField({
+    Address2_country: ReferenceField({
       label: 'Address2 Country',
+      sheetKey: 'Countries_NetSuite_Extract',
+      foreignKey: 'Countries',
+      relationship: 'has-many',
       description:
         'This is the Reference to the Country of this Address. It must match the List of the Countries in NetSuite.',
-      sheet: Countries_NetSuite_Extract,
     }),
 
     Address2_defaultBilling: BooleanField({
@@ -397,6 +419,7 @@ export const Vendor = new Sheet(
   {
     batchRecordsCompute: async (recordBatch, session, logger) => {
       /** begin running migrated hooks **/
+      //Re-write this
 
       await default_address_addressee_to_company_name({
         recordBatch,

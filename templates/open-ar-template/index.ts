@@ -53,7 +53,7 @@ export const Open_AR_Template = new Sheet(
 
     currency: ReferenceField({
       label: 'Currency',
-      sheetKey: 'Currency (NetSuite Extract)',
+      sheetKey: 'Currency_NetSuite_Extract',
       foreignKey: 'Name',
       relationship: 'has-many',
       description:

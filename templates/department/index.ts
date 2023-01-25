@@ -8,6 +8,7 @@ import {
   TextField,
   Workbook,
   Message,
+  ReferenceField,
 } from '@flatfile/configure'
 
 export const Department = new Sheet(
@@ -27,7 +28,7 @@ export const Department = new Sheet(
       unique: true,
     }),
 
-    //Should Validate against a list of exsisting locations from a specific NetSuite environment
+    //Should Validate against a list of exsisting departments from a specific NetSuite environment
     parent: TextField({
       label: 'Parent',
       required: false,
@@ -35,8 +36,11 @@ export const Department = new Sheet(
     }),
 
     //Should validate against Subsidary sheet
-    subsidiary: TextField({
+    subsidiary: ReferenceField({
       label: 'Subsidiary',
+      sheetKey: 'Subsidiary_NetSuite_Extract',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       required: false,
       unique: false,
     }),

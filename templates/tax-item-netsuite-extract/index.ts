@@ -30,7 +30,7 @@ export const Tax_Item_NetSuite_Extract = new Sheet(
 
     country: ReferenceField({
       label: 'Country',
-      sheetKey: 'Countries (NetSuite Extract)',
+      sheetKey: 'Countries_NetSuite_Extract',
       foreignKey: 'Countries',
       relationship: 'has-many',
     }),

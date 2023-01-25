@@ -8,9 +8,8 @@ import {
   TextField,
   Workbook,
   Message,
+  ReferenceField,
 } from '@flatfile/configure'
-
-import { Payment_File_Format_NetSuite_Extract } from '../payment-file-format-netsuite-extract'
 
 export const Vendor_Bank_Details = new Sheet(
   'Vendor Bank Details',
@@ -45,18 +44,24 @@ export const Vendor_Bank_Details = new Sheet(
       },
     }),
 
-    subsidiary: LinkedField({
+    subsidiary: ReferenceField({
       label: 'Subsidiary',
+      sheetKey: 'Subsidiary_NetSuite_Extract',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       description:
         'This is a reference to the subsidiary which must be created in your account prior to import.    Select from the drop down field.',
-      sheet: undefined,
     }),
 
-    paymentFileFormat: LinkedField({
+    paymentFileFormat: ReferenceField({
       label: 'Payment File Format',
+      sheetKey: 'Payment_File_Format_NetSuite_Extract',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description: 'Select the appropriate payment file format to be used',
-      sheet: Payment_File_Format_NetSuite_Extract,
     }),
+
+    // What is the formula for this field?
 
     bankRecordName: TextField({
       label: 'Bank Record Name',
@@ -86,6 +91,8 @@ export const Vendor_Bank_Details = new Sheet(
       label: 'Bank Account Name',
       description: 'Enter the bank account name.',
     }),
+
+    // Do we need validations here?
 
     bankAccountNumber: TextField({
       label: 'Bank Account Number',

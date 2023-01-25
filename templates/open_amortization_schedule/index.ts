@@ -41,7 +41,7 @@ export const Open_Amortization_Schedule = new Sheet(
     //Source from: Currency List
     currency: ReferenceField({
       label: 'Currency',
-      sheetKey: 'Currency (NetSuite Extract)',
+      sheetKey: 'Currency_NetSuite_Extract',
       foreignKey: 'Name',
       relationship: 'has-many',
       required: true,
@@ -88,7 +88,7 @@ export const Open_Amortization_Schedule = new Sheet(
     //Source from: Charts of accounts
     journalItemLine_account: ReferenceField({
       label: 'Journal Item Line Account',
-      sheetKey: 'Chart of Accounts (NetSuite Extract)',
+      sheetKey: 'Chart_of_Accounts_NetSuite_Extract',
       foreignKey: 'Name',
       relationship: 'has-many',
       required: true,

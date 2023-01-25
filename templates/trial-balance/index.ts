@@ -39,7 +39,7 @@ export const Trial_Balance = new Sheet(
 
     //This should from the Subsidary List and should populate the Subsidary Name
     Subsidiary: ReferenceField({
-      label: 'Subsidiary',
+      label: 'Subsidiary Name',
       sheetKey: 'Subsidiary_NetSuite_Extract',
       foreignKey: 'Name',
       relationship: 'has-many',
@@ -54,16 +54,19 @@ export const Trial_Balance = new Sheet(
       description:
         'This is a reference to the subsidiary which must be created in your Setup > Company > Subsidiaries prior to import.',
       required: false,
-      
+
       //hides frield from mapping
       stageVisibility: {
-        mapping: false
+        mapping: false,
       },
     }),
 
     //This should source from the Currency sheet
-    Currency: TextField({
+    Currency: ReferenceField({
       label: 'Currency',
+      sheetKey: 'Currency_NetSuite_Extract',
+      foreignKey: 'Name',
+      relationship: 'has-many',
       description:
         'Enter the transaction currency to be used.  This is a reference to the Currency record which must be created under Lists > Accounting > Currencies prior to import.',
       required: true,
@@ -121,17 +124,19 @@ export const Trial_Balance = new Sheet(
       },
     }),
     // This column should filter from the Charts of Accounts Worksheet - Account - this should source from the Chart of account worksheet
-    account: LinkedField({
-      label: 'Account',
+    account: ReferenceField({
+      label: 'Account Name',
+      sheetKey: 'Chart_of_Accounts_NetSuite_Extract',
+      foreignKey: 'Account Name',
+      relationship: 'has-many',
       required: true,
       description:
         'This is a reference to the GL account against which the amounts have to be posted.    Simply enter the account number of the GL account.  The account must be setup in Lists > Accounting > Accounts prior to import.',
-      sheet: Chart_of_Accounts_NetSuite_Extract,
     }),
 
     //This should be the internal ID of the value set in the account column (column i)
     accountInternalID: TextField({
-      label: 'Account Name',
+      label: 'Account ID',
       required: true,
       description:
         '(Lookup Needed) Displays the account name id on the account name.',
@@ -186,24 +191,33 @@ export const Trial_Balance = new Sheet(
 
     //This should source from the Department List
 
-    department: TextField({
+    department: ReferenceField({
       label: 'Department',
+      sheetKey: 'Department',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'This should be the #N/A value of the segment.  Formula driven. Do not override.',
     }),
 
     //This should source from the Class List
 
-    class: TextField({
+    class: ReferenceField({
       label: 'Class',
+      sheetKey: 'Class',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'This should be the #N/A value of the segment.  Formula driven. Do not override.',
     }),
 
     //This should source from the Location List
 
-    location: TextField({
+    location: ReferenceField({
       label: 'Location',
+      sheetKey: 'Location',
+      foreignKey: 'name',
+      relationship: 'has-many',
       description:
         'This should be the #N/A value of the segment.  Formula driven. Do not override.',
     }),
@@ -223,10 +237,19 @@ export const Trial_Balance = new Sheet(
           'Either credit or debit should be populated per line'
         )
       }
-      const links = record.getLinks('Subsidiary')
-      const SubsidiaryID = links[0].Internal_Id
+
+      //swap these over to common syntax
+
+      const sublinks = record.getLinks('Subsidiary')
+      const SubsidiaryID = sublinks[0].Internal_Id
       if (!!SubsidiaryID) {
         record.set('SubsidiaryID', SubsidiaryID)
+      }
+
+      const acclinks = record.getLinks('account')
+      const accountID = acclinks[0].Internal_Id
+      if (!!accountID) {
+        record.set('accountInternalID', accountID)
       }
     },
   }

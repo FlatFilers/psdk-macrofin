@@ -179,7 +179,7 @@ export const Customers = new Sheet(
 
     category: ReferenceField({
       label: 'Category',
-      sheetKey: 'Customer Category (NetSuite Extract)',
+      sheetKey: 'Customer_Category_NetSuite_Extract',
       foreignKey: 'Name',
       relationship: 'has-many',
       description:
@@ -426,7 +426,7 @@ export const Customers = new Sheet(
 
     Address1_country: ReferenceField({
       label: 'Country',
-      sheetKey: 'Countries (NetSuite Extract)',
+      sheetKey: 'Countries_NetSuite_Extract',
       foreignKey: 'Countries',
       relationship: 'has-many',
       description:
@@ -453,7 +453,7 @@ export const Customers = new Sheet(
 
     defaultreceivablesaccount: ReferenceField({
       label: 'Default Receivables Account',
-      sheetKey: 'Chart of Accounts (NetSuite Extract)',
+      sheetKey: 'Chart_of_Accounts_NetSuite_Extract',
       foreignKey: 'Account Name',
       relationship: 'has-many',
       description:
@@ -462,7 +462,7 @@ export const Customers = new Sheet(
 
     currency: ReferenceField({
       label: 'Currency',
-      sheetKey: 'Currency (NetSuite Extract)',
+      sheetKey: 'Currency_NetSuite_Extract',
       foreignKey: 'Name',
       relationship: 'has-many',
       description:
@@ -471,7 +471,7 @@ export const Customers = new Sheet(
 
     terms: ReferenceField({
       label: 'Terms',
-      sheetKey: 'Terms (NetSuite Extract)',
+      sheetKey: 'Terms_NetSuite_Extract',
       foreignKey: 'description',
       relationship: 'has-many',
       description:
