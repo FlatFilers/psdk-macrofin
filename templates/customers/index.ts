@@ -180,7 +180,7 @@ export const Customers = new Sheet(
     category: ReferenceField({
       label: 'Category',
       sheetKey: 'Customer_Category_NetSuite_Extract',
-      foreignKey: 'Name',
+      foreignKey: 'name',
       relationship: 'has-many',
       description:
         'Provide the Category reference for this Customer.   It must exist in Setup > Accounting > Accounting Lists > New > Customer Category prior to importing.',

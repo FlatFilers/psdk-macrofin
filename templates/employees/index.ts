@@ -216,7 +216,7 @@ export const Employees = new Sheet(
 
     class: ReferenceField({
       label: 'Class',
-      sheetKey: 'Class',
+      sheetKey: 'Classes',
       foreignKey: 'name',
       relationship: 'has-many',
       description:
@@ -454,7 +454,7 @@ export const Employees = new Sheet(
     }),
 
     //Validate against country list in NetSuite
-    address1_country: TextField({
+    address1_country: ReferenceField({
       label: 'Address 1 - Country',
       sheetKey: 'Countries_NetSuite_Extract',
       foreignKey: 'Countries',
@@ -518,7 +518,7 @@ export const Employees = new Sheet(
     }),
 
     //can we validate the states against the countries
-    address2_state: TextField({
+    address2_state: ReferenceField({
       label: 'Address 2 - State',
       sheetKey: 'States_NetSuite_Extract',
       foreignKey: 'State',

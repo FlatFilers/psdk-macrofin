@@ -1,4 +1,4 @@
-import { Workbook } from '@flatfile/configure'
+import { Workbook, SpaceConfig } from '@flatfile/configure'
 
 import { Open_AP_Template } from '../templates/open-ap-template'
 import { Vendor } from '../templates/vendor'
@@ -33,41 +33,104 @@ import { Partners } from '../templates/partners'
 import { Open_Amortization_Schedule } from '../templates/open_amortization_schedule'
 import { Open_Sales_Order } from '../templates/open_sales_order'
 
-export default new Workbook({
-  name: 'Default',
-  namespace: 'default',
-  sheets: {
-    Open_AP_Template,
-    Vendor,
-    Chart_of_Accounts_NetSuite_Extract,
-    Open_AR_Template,
-    Customers,
-    Trial_Balance,
-    Subsidiary_NetSuite_Extract,
-    States_NetSuite_Extract,
-    Price_Level_NetSuite_Extract,
-    Tax_Item_NetSuite_Extract,
-    Terms_NetSuite_Extract,
-    Currency_NetSuite_Extract,
-    Status_NetSuite_Extract,
-    Customer_Vendor_NetSuite_Extract,
-    Language_NetSuite_Extract,
-    Payment_Term_NetSuite_Extract,
-    Customer_Category_NetSuite_Extract,
-    Sales_Rep_NetSuite_Extract,
-    Vendor_Category_NetSuite_Extract,
-    Countries_NetSuite_Extract,
-    Payment_File_Format_NetSuite_Extract,
-    Employees,
-    Sales_Order_Status,
-    Location,
-    Department,
-    Classes,
-    Vendor_Bank_Details,
-    Billing_Schedule,
-    Job,
-    Partners,
-    Open_Amortization_Schedule,
-    Open_Sales_Order,
+export default new SpaceConfig({
+  name: 'MF Full Project',
+  slug: 'MFFullProjectsc',
+  workbookConfigs: {
+    customers: new Workbook({
+      name: 'Customers',
+      slug: 'CustomersWorkbook',
+      namespace: 'Customers',
+      sheets: {
+        //sheet to be populated in Space
+        Customers,
+        //Reference sheets for customers
+        Status_NetSuite_Extract,
+        Subsidiary_NetSuite_Extract,
+        Employees,
+        Customer_Category_NetSuite_Extract,
+        States_NetSuite_Extract,
+        Countries_NetSuite_Extract,
+        Chart_of_Accounts_NetSuite_Extract,
+        Currency_NetSuite_Extract,
+        Terms_NetSuite_Extract,
+        //Reference sheets for employees
+        Department,
+        Classes,
+        Location,
+        //States_NetSuite_Extract
+        //Countries_NetSuite_Extract
+      },
+    }),
+    vendors: new Workbook({
+      name: 'Vendors',
+      slug: 'VendorsWorkbook',
+      namespace: 'Vendors',
+      sheets: {
+        //sheet to be populated in Space
+        Vendor,
+        //Reference sheets for vendors
+        Subsidiary_NetSuite_Extract,
+        Currency_NetSuite_Extract,
+        Payment_Term_NetSuite_Extract,
+        States_NetSuite_Extract,
+        Countries_NetSuite_Extract,
+        Vendor_Category_NetSuite_Extract,
+        Chart_of_Accounts_NetSuite_Extract,
+        Price_Level_NetSuite_Extract,
+        Tax_Item_NetSuite_Extract,
+      },
+    }),
+    open_ap: new Workbook({
+      name: 'Open AP',
+      slug: 'OpenAPWorkbook',
+      namespace: 'Open AP',
+      sheets: {
+        //sheet to be populated in Space
+        Open_AP_Template,
+        //Reference sheets for OpenAP
+        Vendor,
+        Subsidiary_NetSuite_Extract,
+        Currency_NetSuite_Extract,
+        //Reference sheets for vendors
+        Payment_Term_NetSuite_Extract,
+        States_NetSuite_Extract,
+        Countries_NetSuite_Extract,
+        Vendor_Category_NetSuite_Extract,
+        Chart_of_Accounts_NetSuite_Extract,
+        Price_Level_NetSuite_Extract,
+        Tax_Item_NetSuite_Extract,
+        //Subsidiary_NetSuite_Extract,
+        //Currency_NetSuite_Extract,
+      },
+    }),
+    open_ar: new Workbook({
+      name: 'Open AR',
+      slug: 'OpenARWorkbook',
+      namespace: 'Open AR',
+      sheets: {
+        //sheet to be populated in Space
+        Open_AR_Template,
+        //Reference sheets for Open AR
+        Customers,
+        Subsidiary_NetSuite_Extract,
+        Currency_NetSuite_Extract,
+        //Reference sheets for customers
+        Status_NetSuite_Extract,
+        Employees,
+        Customer_Category_NetSuite_Extract,
+        States_NetSuite_Extract,
+        Countries_NetSuite_Extract,
+        Chart_of_Accounts_NetSuite_Extract,
+        Terms_NetSuite_Extract,
+        //Currency_NetSuite_Extract,
+        //Subsidiary_NetSuite_Extract,
+
+        //Reference sheets for employees
+        Department,
+        Classes,
+        Location,
+      },
+    }),
   },
 })
