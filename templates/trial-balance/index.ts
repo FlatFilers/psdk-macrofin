@@ -3,7 +3,6 @@ import {
   DateField,
   NumberField,
   OptionField,
-  LinkedField,
   Sheet,
   TextField,
   Workbook,
@@ -55,6 +54,11 @@ export const Trial_Balance = new Sheet(
       description:
         'This is a reference to the subsidiary which must be created in your Setup > Company > Subsidiaries prior to import.',
       required: false,
+      
+      //hides frield from mapping
+      stageVisibility: {
+        mapping: false
+      },
     }),
 
     //This should source from the Currency sheet
