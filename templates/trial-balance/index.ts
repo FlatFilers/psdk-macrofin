@@ -99,7 +99,7 @@ export const Trial_Balance = new Sheet(
 
     tranDate: SmartDateField({
       label: 'Tran Date',
-      fstring: 'DD/MM/YY',
+      formatString: 'dd/MM/YY',
       required: true,
       description:
         'Enter the transaction date.  This defaults to the date entered on the instruction sheet. Override if needed.',

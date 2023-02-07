@@ -45,7 +45,7 @@ export const Open_Sales_Order = new Sheet(
     //This should be in the date format DD/MM/YYYY
     date: SmartDateField({
       label: 'Date',
-      fstring: 'DD/MM/YY',
+      formatString: 'dd/MM/yy',
       required: true,
     }),
 
@@ -61,14 +61,14 @@ export const Open_Sales_Order = new Sheet(
     //This should be in the date format DD/MM/YYYY
     startDate: SmartDateField({
       label: 'Start Date',
-      fstring: 'DD/MM/YY',
+      formatString: 'dd/MM/yy',
       required: false,
     }),
 
     //This should be in the date format DD/MM/YYYY
     endDate: SmartDateField({
       label: 'End Date',
-      fstring: 'DD/MM/YY',
+      formatString: 'dd/MM/yy',
       required: false,
     }),
 
@@ -121,7 +121,7 @@ export const Open_Sales_Order = new Sheet(
     //This should be in the date format DD/MM/YYYY
     salesEffectiveDate: SmartDateField({
       label: 'Sales Effective Date',
-      fstring: 'DD/MM/YY',
+      formatString: 'dd/MM/yy',
       required: false,
     }),
 
@@ -253,13 +253,13 @@ export const Open_Sales_Order = new Sheet(
     //This should be in the date format DD/MM/YYYY
     revRecStartDate: SmartDateField({
       label: 'Rev. Rec. Start Date',
-      fstring: 'DD/MM/YY',
+      formatString: 'dd/MM/yy',
       required: true,
     }),
     //This should be in the date format DD/MM/YYYY
     revRecEndDate: SmartDateField({
       label: 'Rev. Rec. End Date',
-      fstring: 'DD/MM/YY',
+      formatString: 'dd/MM/yy',
       required: true,
     }),
   },

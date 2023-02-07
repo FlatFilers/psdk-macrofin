@@ -74,7 +74,7 @@ export const Open_Amortization_Schedule = new Sheet(
 
     tranDate: SmartDateField({
       label: 'Tran Date',
-      fstring: 'DD/MM/YY',
+      formatString: 'dd/MM/yyyy',
       required: true,
     }),
 
@@ -141,17 +141,17 @@ export const Open_Amortization_Schedule = new Sheet(
       required: false,
     }),
 
-    //DD/MM/YYYY
+    //dd/MM/YYYY
     journalItemLine_startdate: SmartDateField({
       label: 'Journal Item Line Start Date',
-      fstring: 'DD/MM/YY',
+      formatString: 'dd/MM/yyyy',
       required: false,
     }),
 
-    //DD/MM/YYYY
+    //dd/MM/YYYY
     journalItemLine_enddate: SmartDateField({
       label: 'Journal Item Line End Date',
-      fstring: 'DD/MM/YY',
+      formatString: 'dd/MM/yyyy',
       required: false,
     }),
 

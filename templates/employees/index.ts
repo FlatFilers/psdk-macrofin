@@ -296,28 +296,32 @@ export const Employees = new Sheet(
 
     hiredate: SmartDateField({
       label: 'Hire Date',
-      formatString: 'DD/MM/YYYY',
+      formatString: 'dd/MM/yyyy',
+      locale: 'fr',
       description:
         'Date should be entered in the format that is supported by your account.   The date preference can be set by navigating to Setup > Company > General Preferences.',
     }),
 
     lastreviewdate: SmartDateField({
       label: 'Last Review Date',
-      formatString: 'DD/MM/YYYY',
+      formatString: 'dd/MM/yyyy',
+      locale: 'fr',
       description:
         'Enter the Last Review date for this Employee. Date should be entered in the format that is supported by your account.   The date preference can be set by navigating to Setup > Company > General Preferences.',
     }),
 
     nextreviewdate: SmartDateField({
       label: 'Next Review Date',
-      formatString: 'DD/MM/YYYY',
+      formatString: 'dd/MM/yyyy',
+      locale: 'fr',
       description:
         'Enter the Next Review date for this Employee. Date should be entered in the format that is supported by your account.   The date preference can be set by navigating to Setup > Company > General Preferences.',
     }),
 
     releasedate: SmartDateField({
       label: 'Release Date',
-      formatString: 'DD/MM/YYYY',
+      formatString: 'dd/MM/yyyy',
+      locale: 'fr',
       description: "Enter this person's last date of employment.",
     }),
 

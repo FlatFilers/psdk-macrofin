@@ -93,13 +93,13 @@ export const Open_AP_Template = new Sheet(
       label: 'Tran Date',
       description: 'Enter the original invoice date.',
       required: true,
-      fString: 'yyyy-MM-dd',
+      formatString: 'yyyy-MM-dd',
     }),
 
     dueDate: SmartDateField({
       label: 'Due Date',
       description: 'Enter the due date of the invoice.',
-      fString: 'yyyy-MM-dd',
+      formatString: 'yyyy-MM-dd',
     }),
 
     referenceno: TextField({
