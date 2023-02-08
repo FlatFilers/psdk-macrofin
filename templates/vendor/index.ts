@@ -11,6 +11,7 @@ import {
 } from '@flatfile/configure'
 
 import default_address_addressee_to_company_name from './hooks/default-address1_addressee-to-company-name.js'
+import { vlookup, isNil } from '../../src/common/common.js'
 
 export const Vendor = new Sheet(
   'Vendor',
@@ -295,6 +296,13 @@ export const Vendor = new Sheet(
         'This is a reference to a default Sales tax item that applies to this Vendor.   The Sales Tax item must exist in Setup > Accounting > Tax Codes prior to importing.',
     }),
 
+    taxItemInternalId: TextField({
+      label: 'Tax Item Internal ID',
+      stageVisibility: {
+        mapping: false,
+      },
+    }),
+
     vatregnumber: TextField({
       label: "Vendor's tax registration number",
       description: "Enter this Vendor's tax registration number.",
@@ -417,16 +425,18 @@ export const Vendor = new Sheet(
     }),
   },
   {
-    batchRecordsCompute: async (recordBatch, session, logger) => {
-      /** begin running migrated hooks **/
-      //Re-write this
+    recordCompute: (record, _session, _logger) => {
+      vlookup(record, 'taxItem', 'internalID', 'taxItemInternalId')
 
-      await default_address_addressee_to_company_name({
-        recordBatch,
-        session,
-        logger,
-      })
-      /** end running migrated hooks **/
+      const Address1_Addressee = record.get('Address1_Addressee')
+      const companyName = record.get('companyName')
+      if (isNil(Address1_Addressee) && companyName) {
+        record.set('Address1_Addressee', companyName)
+        record.addWarning(
+          'Address1_Addressee',
+          'Address1_Addressee has been set to Company Name'
+        )
+      }
     },
   }
 )

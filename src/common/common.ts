@@ -27,19 +27,5 @@ const vlookup = (
   }
 }
 
-const validateReferenceField = (
-  record: FlatfileRecord,
-  referenceField: string,
-  lookupField: string,
-  errorMessage: string = `Lookup on ${referenceField} not found.`
-) => {
-  const links = record.getLinks(referenceField)
-  const lookupValue = links[0][lookupField]
-
-  if (isNil(lookupValue)) {
-    record.addError(referenceField, errorMessage)
-  }
-}
-
 //Export Values
-export { isNil, isNotNil, vlookup, validateReferenceField }
+export { isNil, isNotNil, vlookup }
