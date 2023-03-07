@@ -65,6 +65,17 @@ export const Open_AR_Template = new Sheet(
       label: 'Exchange Rate',
       description:
         'Enter the currency exchange rate as of cutover date for the transaction.  Ask your lead consultant for details.',
+      default: 1,
+      annotations: {
+        default: true,
+        defaultMessage: 'Exchange Rate was not provided, it has been set to ',
+        compute: true,
+        computeMessage:
+          'This value was automatically reformatted to eight decimal places. Original value was: ',
+      },
+      compute: (v: number) => {
+        return Number(v.toFixed(8))
+      },
     }),
 
     postingPeriod: TextField({

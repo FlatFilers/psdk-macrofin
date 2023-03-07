@@ -1,4 +1,6 @@
 import { Workbook, SpaceConfig } from '@flatfile/configure'
+import { EventTopic } from '@flatfile/api'
+import { ExcelExtractor } from '@flatfile/plugin-xlsx-extractor'
 
 import { Open_AP_Template } from '../templates/open-ap-template'
 import { Vendor } from '../templates/vendor'
@@ -33,7 +35,7 @@ import { Partners } from '../templates/partners'
 import { Open_Amortization_Schedule } from '../templates/open_amortization_schedule'
 import { Open_Sales_Order } from '../templates/open_sales_order'
 
-export default new SpaceConfig({
+const macrofinFullProject = new SpaceConfig({
   name: 'MF Full Project',
   slug: 'MFFullProjectsc',
   workbookConfigs: {
@@ -134,3 +136,10 @@ export default new SpaceConfig({
     }),
   },
 })
+
+//Excel Plug-in
+macrofinFullProject.on([EventTopic.Uploadcompleted], (event) => {
+  return new ExcelExtractor(event, { rawNumbers: true }).runExtraction()
+})
+
+export default macrofinFullProject

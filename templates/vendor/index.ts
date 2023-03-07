@@ -10,7 +10,6 @@ import {
   Message,
 } from '@flatfile/configure'
 
-import default_address_addressee_to_company_name from './hooks/default-address1_addressee-to-company-name.js'
 import { vlookup, isNil } from '../../src/common/common.js'
 
 export const Vendor = new Sheet(
