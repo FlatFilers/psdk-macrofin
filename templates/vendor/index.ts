@@ -300,6 +300,7 @@ export const Vendor = new Sheet(
       stageVisibility: {
         mapping: false,
       },
+      readonly: true,
     }),
 
     vatregnumber: TextField({

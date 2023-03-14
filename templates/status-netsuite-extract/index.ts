@@ -24,6 +24,7 @@ export const Status_NetSuite_Extract = new Sheet(
     }),
   },
   {
+    readonly: true,
     batchRecordsCompute: async (recordBatch, session, logger) => {
       /** begin running migrated hooks **/
       /** end running migrated hooks **/
